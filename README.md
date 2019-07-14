@@ -399,3 +399,117 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     18    300000  873139503.0   2910.5     99.8          if randint(1, 10000000) in data:
     19      2905       2835.0      1.0      0.0              cnt += 1
 ```
+
+## memory_profiler
+
+list と set と array.array サイズが大きく違って面白い。
+
+array.array、流石にint縛りにしたarrayのメモリ消費量少ない。
+遅いけれどメモリ1/10で済むなら用途あるよな。間違ってないよね？
+
+### list with for loop
+
+```
+$ python -m memory_profiler append_to_list_with_loop.py
+append_to_list_with_loop.py
+Filename: append_to_list_with_loop.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5   35.980 MiB   35.980 MiB   @profile
+     6                             def create_data():
+     7   35.980 MiB    0.000 MiB       l = list()
+     8   41.668 MiB    0.000 MiB       for i in range(100000):
+     9   41.668 MiB    0.699 MiB           l.append(randint(1, 10000000))
+    10   41.668 MiB    0.000 MiB       return l
+```
+
+### list comprehension
+
+```
+$ python -m memory_profiler append_to_list_with_comp.py
+append_to_list_with_comp.py
+Filename: append_to_list_with_comp.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5   35.984 MiB   35.984 MiB   @profile
+     6                             def create_data():
+     7   41.645 MiB    0.699 MiB       return [randint(1, 10000000) for i in range(100000)]
+```
+
+### list comprehension and convert it to set
+
+```
+$ python -m memory_profiler append_to_list_with_comp_and_create_set.py
+append_to_list_with_comp_and_create_set.py
+Filename: append_to_list_with_comp_and_create_set.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5   36.047 MiB   36.047 MiB   @profile
+     6                             def create_data():
+     7   47.770 MiB    6.043 MiB       return set([randint(1, 10000000) for i in range(100000)])
+```
+
+### set with for loop
+
+```
+$ python -m memory_profiler add_to_set_with_loop.py
+add_to_set_with_loop.py
+Filename: add_to_set_with_loop.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5   36.062 MiB   36.062 MiB   @profile
+     6                             def create_data():
+     7   36.062 MiB    0.000 MiB       s = set()
+     8   45.277 MiB    0.000 MiB       for i in range(100000):
+     9   45.277 MiB    4.000 MiB           s.add(randint(1, 10000000))
+    10   45.277 MiB    0.000 MiB       return s
+```
+
+### set comprehension
+
+```
+$ python -m memory_profiler add_to_set_with_comp.py
+add_to_set_with_comp.py
+Filename: add_to_set_with_comp.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     5   36.094 MiB   36.094 MiB   @profile
+     6                             def create_data():
+     7   45.312 MiB    4.000 MiB       return {randint(1, 10000000) for i in range(100000)}
+```
+
+### array.array with for loop
+
+```
+$ python -m memory_profiler append_to_array_with_loop.py
+append_to_array_with_loop.py
+Filename: append_to_array_with_loop.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     6   36.051 MiB   36.051 MiB   @profile
+     7                             def create_data():
+     8   36.059 MiB    0.008 MiB       a = array('i')
+     9   36.484 MiB    0.000 MiB       for i in range(100000):
+    10   36.484 MiB    0.070 MiB           a.append(randint(1, 10000000))
+    11   36.484 MiB    0.000 MiB       return a
+```
+
+### list comprehension and create array.array from it
+
+```
+$ python -m memory_profiler append_to_array_with_comp.py
+append_to_array_with_comp.py
+Filename: append_to_array_with_comp.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+     6   36.109 MiB   36.109 MiB   @profile
+     7                             def create_data():
+     8   41.797 MiB    0.699 MiB       return array('i', [randint(1, 10000000) for i in range(100000)])
+```
