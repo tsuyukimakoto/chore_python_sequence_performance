@@ -316,3 +316,86 @@ $ python3.7 -m cProfile -s cumulative append_to_array_with_comp.py
        10    0.001    0.000    0.001    0.000 {built-in method posix.getcwd}
   - snip
 ```
+
+## line_profiler
+
+事前にcythonをpipでインストールしてから [書いてある通りに](https://github.com/rkern/line_profiler#installation) インストールした。
+
+### list
+
+```
+$ kernprof -l append_to_list_with_loop.py
+append_to_list_with_loop.py
+sys.version_info(major=3, minor=7, micro=3, releaselevel='final', serial=0)
+Wrote profile results to append_to_list_with_loop.py.lprof
+
+$ python -m line_profiler append_to_list_with_loop.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 443.405 s
+File: append_to_list_with_loop.py
+Function: proc at line 12
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    12                                           @profile
+    13                                           def proc():
+    14         3          9.0      3.0      0.0      cnt = 0
+    15         3    1558856.0 519618.7      0.4      data = create_data()
+    16    300003     205982.0      0.7      0.0      for i in range(100000):
+    17    300000  441637215.0   1472.1     99.6          if randint(1, 10000000) in data:
+    18      3039       3107.0      1.0      0.0              cnt += 1
+```
+
+
+### set
+
+```
+$ kernprof -l add_to_set_with_loop.py
+add_to_set_with_loop.py
+sys.version_info(major=3, minor=7, micro=3, releaselevel='final', serial=0)
+Wrote profile results to add_to_set_with_loop.py.lprof
+
+$ python -m line_profiler add_to_set_with_loop.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 3.30561 s
+File: add_to_set_with_loop.py
+Function: proc at line 11
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    11                                           @profile
+    12                                           def proc():
+    13         3          8.0      2.7      0.0      cnt = 0
+    14         3    1593041.0 531013.7     48.2      data = create_data()
+    15    300003     114824.0      0.4      3.5      for i in range(100000):
+    16    300000    1596492.0      5.3     48.3          if randint(1, 10000000) in data:
+    17      2936       1242.0      0.4      0.0              cnt += 1
+```
+
+### array.array
+
+```
+$ kernprof -l append_to_array_with_loop.py
+append_to_array_with_loop.py
+sys.version_info(major=3, minor=7, micro=3, releaselevel='final', serial=0)
+Wrote profile results to append_to_array_with_loop.py.lprof
+
+$ python -m line_profiler append_to_array_with_loop.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 874.929 s
+File: append_to_array_with_loop.py
+Function: proc at line 13
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    13                                           @profile
+    14                                           def proc():
+    15         3          5.0      1.7      0.0      cnt = 0
+    16         3    1586118.0 528706.0      0.2      data = create_data()
+    17    300003     200262.0      0.7      0.0      for i in range(100000):
+    18    300000  873139503.0   2910.5     99.8          if randint(1, 10000000) in data:
+    19      2905       2835.0      1.0      0.0              cnt += 1
+```

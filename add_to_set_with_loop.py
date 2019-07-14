@@ -8,6 +8,8 @@ def create_data():
         s.add(randint(1, 10000000))
     return s
 
+
+@profile
 def proc():
     cnt = 0
     data = create_data()
