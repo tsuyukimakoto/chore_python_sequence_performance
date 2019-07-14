@@ -9,7 +9,7 @@ def create_data():
     return s
 
 
-@profile
+# @profile
 def proc():
     cnt = 0
     data = create_data()
