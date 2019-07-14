@@ -3,7 +3,7 @@ import sys
 
 
 def create_data():
-    return set([randint(1, 10000000) for i in range(100000)])
+    return [randint(1, 10000000) for i in range(100000)]
 
 
 def proc():
