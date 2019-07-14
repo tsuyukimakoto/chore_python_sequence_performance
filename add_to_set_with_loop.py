@@ -19,5 +19,5 @@ if __name__ == '__main__':
     print(sys.argv[0])
     print(sys.version_info)
     import timeit
-    print(timeit.timeit("proc()", setup="from __main__ import proc", number=1))
+    print(timeit.timeit("proc()", setup="from __main__ import proc", number=3))
     # [proc() for i in range(10)]
