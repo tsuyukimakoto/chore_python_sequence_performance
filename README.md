@@ -321,6 +321,8 @@ $ python3.7 -m cProfile -s cumulative append_to_array_with_comp.py
 
 事前にcythonをpipでインストールしてから [書いてある通りに](https://github.com/rkern/line_profiler#installation) インストールした。
 
+@profileはkernprofがいい感じに処理をする（pythonとしては実行できない）
+
 ### list
 
 ```
@@ -406,6 +408,8 @@ list と set と array.array サイズが大きく違って面白い。
 
 array.array、流石にint縛りにしたarrayのメモリ消費量少ない。
 遅いけれどメモリ1/10で済むなら用途あるよな。間違ってないよね？
+
+@profileはmemory_profilerがいい感じにする。
 
 ### list with for loop
 
