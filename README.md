@@ -4,12 +4,12 @@
 
 ## timeit
 
-基本的にはO(n)とO(1)なのでlistよりsetが速いのはわかりきっていたけれど、それにしてもループ遅いなという感想。
+基本的にはO(n)とO(1)なのでlistよりsetが速いのはわかるのだけれど、それにしてもループ遅いなという感想。
 
 array.arrayでint指定したら少し良いことあるかな？と思ったけど遅い。
 
 | data structure | loop | time | script |
-|:---:||:---:|---:|:---|
+|:---:|:---:|---:|:---|
 | list | for | 450.540 | append_to_list_with_loop.py |
 | list | Comprehension | 456.691 | append_to_list_with_comp.py |
 | set | for | 0.909365004 | add_to_set_with_loop.py |
@@ -27,7 +27,7 @@ JavaのCollectionを使う場合にはキャパシティをあらかじめ指定
 サイズが大きくてチェック回数が多いなら、setの生成コストは気にせずどんどんset生成してけばよい？
 
 | data structure | loop | time | script |
-|:---:||:---:|---:|:---|
+|:---:|:---:|---:|:---|
 | list | for | 0.251 | append_to_list_with_loop.py |
 | list | Comprehension | 0.220 | append_to_list_with_comp.py |
 | set | for | 0.259 | add_to_set_with_loop.py |
